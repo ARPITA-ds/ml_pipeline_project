@@ -50,7 +50,7 @@ class DataIngestion:
             
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
 
-            for train_index, test_index in split.split(raw_data_frame, raw_data_frame["income"]):
+            for train_index, test_index in split.split(raw_data_frame, raw_data_frame['income']):
                 strat_train_set = raw_data_frame.loc[train_index]
                 strat_test_set = raw_data_frame.loc[test_index]
 
