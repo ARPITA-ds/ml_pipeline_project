@@ -1,0 +1,14 @@
+data_ingestion_config:
+  dataset_download_file_name: adult.csv
+  dataset_download_id: https://github.com/Shivan118/ml_pipeline_project/blob/main/notbook/data/income_cleandata.csv
+  ingested_dir: ingested_data
+  ingested_test_file: test.csv
+  ingested_train_file: train.csv
+  ingestion_dir: Stage00_data_ingestion
+  raw_data_dir: raw_data
+
+training_pipeline_config:
+  artifact_dir: artifact
+  experiment_code: Development
+  pipeline_name: mlpipeline
+ 

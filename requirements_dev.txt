@@ -4,5 +4,16 @@ scikit-learn
 matplotlib
 seaborn
 flask 
+pydantic==1.10.7
+loguru~=0.6.0
+ensure==1.0.2
+PyYAML~=5.4.1
+scikit-learn~=1.2.2
+evidently~=0.2.6
+python-box~= 6.0.2
+joblib==1.2.0
+typing_extensions==4.5.0
+dill==0.3.6
+configobj==5.0.8
 
 -e .
