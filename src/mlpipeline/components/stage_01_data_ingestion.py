@@ -25,7 +25,7 @@ class DataIngestion:
     def download_data(self,dataset_download_id:str,raw_data_file_path:Path)->bool:
         try:
             logging.info(f"Downloading data from github")
-            raw_data_frame = pd.read_csv(dataset_download_id, on_bad_lines='skip')
+            raw_data_frame = pd.read_csv(dataset_download_id)
             raw_data_frame.to_csv(raw_data_file_path,index=False)
             logging.info("Dataset downloaded successfully")
 
@@ -49,8 +49,9 @@ class DataIngestion:
             strat_test_set = None
             
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
-
-            for train_index, test_index in split.split(raw_data_frame, raw_data_frame['income']):
+            
+           
+            for train_index, test_index in split.split(raw_data_frame , raw_data_frame['income']):
                 strat_train_set = raw_data_frame.loc[train_index]
                 strat_test_set = raw_data_frame.loc[test_index]
 
