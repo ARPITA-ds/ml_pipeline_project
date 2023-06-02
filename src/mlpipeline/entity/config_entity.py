@@ -12,4 +12,11 @@ class DataIngestionConfig(BaseModel):
 class TrainingPipelineConfig(BaseModel):
     artifact_dir: DirectoryPath
     pipeline_name: str
+
+
+class DataTransformationConfig(BaseModel):
+    preprocessed_object_file_path: Path
+    train_data_file: Path
+    test_data_file: Path
+    
     

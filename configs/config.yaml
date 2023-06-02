@@ -1,6 +1,6 @@
 data_ingestion_config:
   dataset_download_file_name: adult.csv
-  dataset_download_id: https://raw.githubusercontent.com/Shivan118/ml_pipeline_project/main/notbook/data/income_cleandata.csv
+  dataset_download_id: https://raw.githubusercontent.com/ARPITA-ds/ml_pipeline_project/main/cleandata.csv
   ingested_dir: ingested_data
   ingested_test_file: test.csv
   ingested_train_file: train.csv
@@ -11,4 +11,10 @@ training_pipeline_config:
   artifact_dir: artifact
   experiment_code: Development
   pipeline_name: mlpipeline
+
+
+data_transformation_config:
+  data_transformation_dir: stage03_data_transformation
+  preprocessing_object_dir: preprocessing
+  preprocessing_object_file_name: preprocessing_obj.pkl
  

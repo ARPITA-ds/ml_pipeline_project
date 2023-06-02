@@ -4,7 +4,7 @@ from pathlib import Path
 
 from  mlpipeline.constants import (CURRENT_TIME_STAMP, ROOT_DIR)
 
-from  mlpipeline.entity.config_entity import (DataIngestionConfig,TrainingPipelineConfig)
+from  mlpipeline.entity.config_entity import (DataIngestionConfig,TrainingPipelineConfig,DataTransformationConfig)
                               
 from  mlpipeline.exception import CustomException
 from  mlpipeline.logger import logging
@@ -97,4 +97,29 @@ class ConfigurationManager:
             return training_pipeline_config
         except Exception as e:
             raise CustomException(e, sys) from e
+        
+    def get_data_transformation_config(self,data_ingestion_config:DataIngestionConfig)->DataTransformationConfig:
+        try:
+            pipeline_config = self.pipeline_config
+            artifact_dir = pipeline_config.artifact_dir
+            train_data_file = data_ingestion_config.ingested_train_file_path
+            test_data_file = data_ingestion_config.ingested_test_file_path
+            
+            data_transformation_config_info = self.config_info.data_transformation_config
+            data_transformation_dir_name = data_transformation_config_info.data_transformation_dir
+            data_transformation_dir = os.path.join(artifact_dir,data_transformation_dir_name)
+            preprocessed_object_dir = data_transformation_config_info.preprocessing_object_dir
+            preprocessed_object_name = data_transformation_config_info.preprocessing_object_file_name
+            preprocessed_object_file_path = os.path.join(data_transformation_dir, preprocessed_object_dir,
+                                                         preprocessed_object_name)
+
+            create_directories([os.path.dirname(preprocessed_object_file_path)])
+            data_transformation_config = DataTransformationConfig(
+                preprocessed_object_file_path=preprocessed_object_file_path,
+                train_data_file = train_data_file,
+                test_data_file=test_data_file)
+            return data_transformation_config
+
+        except Exception as e:
+            raise CustomException(e,sys) from e
 
