@@ -11,6 +11,7 @@ from mlpipeline.entity.artifact_entity import DataTransformationArtifact
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from mlpipeline.utils.common import save_object
+from mlpipeline.components.model_trainer import ModelTrainer
 
 
 class DataTransformation:
@@ -119,9 +120,12 @@ class DataTransformation:
             raise CustomException(e,sys) from e
         
 
-if __name__ == "__main__":
-    config = ConfigurationManager(config_file_path="configs\config.yaml")
-    data_ingestion_config_info = config.get_data_ingestion_config()
-    data_transformation_config = config.get_data_transformation_config(data_ingestion_config=data_ingestion_config_info)
-    data_transformation = DataTransformation(data_transformation_config_info=data_transformation_config)
-    data_transformation_response = data_transformation.inititate_data_transformation()
+#if __name__ == "__main__":
+    #config = ConfigurationManager(config_file_path="configs\config.yaml")
+    #data_ingestion_config_info = config.get_data_ingestion_config()
+    #data_transformation_config = config.get_data_transformation_config(data_ingestion_config=data_ingestion_config_info)
+    #data_transformation = DataTransformation(data_transformation_config_info=data_transformation_config)
+    #data_transformation_response = data_transformation.inititate_data_transformation()
+
+    #modeltrainer = ModelTrainer()
+    #print(modeltrainer.initiate_model_trainer())

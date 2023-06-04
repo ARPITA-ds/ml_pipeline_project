@@ -4,7 +4,7 @@ from pathlib import Path
 
 from  mlpipeline.constants import (CURRENT_TIME_STAMP, ROOT_DIR)
 
-from  mlpipeline.entity.config_entity import (DataIngestionConfig,TrainingPipelineConfig,DataTransformationConfig)
+from  mlpipeline.entity.config_entity import (DataIngestionConfig,TrainingPipelineConfig,DataTransformationConfig,ModelTrainerConfig)
                               
 from  mlpipeline.exception import CustomException
 from  mlpipeline.logger import logging
@@ -115,11 +115,41 @@ class ConfigurationManager:
 
             create_directories([os.path.dirname(preprocessed_object_file_path)])
             data_transformation_config = DataTransformationConfig(
-                preprocessed_object_file_path=preprocessed_object_file_path,
-                train_data_file = train_data_file,
+                preprocessed_object_file_path=preprocessed_object_file_path,train_data_file = train_data_file,
                 test_data_file=test_data_file)
             return data_transformation_config
 
         except Exception as e:
             raise CustomException(e,sys) from e
+        
+
+    def get_model_trainer_config(self, data_ingestion_config: DataIngestionConfig , 
+                                 data_transformation_config_info : DataTransformationConfig) -> ModelTrainerConfig:
+       
+        try:
+            pipeline_config = self.pipeline_config
+            artifact_dir = pipeline_config.artifact_dir
+            train_data_file = data_ingestion_config.ingested_train_file_path
+            test_data_file = data_ingestion_config.ingested_test_file_path
+            model_trainer_config_info = self.config_info.model_trainer_config
+            model_trainer_artifact_dir_name = model_trainer_config_info.model_trainer_dir
+            model_trainer_artifact_dir = os.path.join(artifact_dir, model_trainer_artifact_dir_name)
+            model_report_dir_name = model_trainer_config_info.model_reports_dir
+
+            trained_model_path = os.path.join(model_trainer_artifact_dir, "best_model", "best_model.pkl")
+            model_report_dir = os.path.join(model_trainer_artifact_dir, model_report_dir_name)
+            preprocessed_object_file_path = data_transformation_config_info.preprocessed_object_file_path
+
+            create_directories([os.path.dirname(trained_model_path), model_report_dir])
+
+            model_trainer_config = ModelTrainerConfig(
+                                                      trained_model_file_path=trained_model_path,
+                                                      model_report_dir=model_report_dir,
+                                                      preprocessed_object_file_path=preprocessed_object_file_path
+                                                     )
+
+            return model_trainer_config
+
+        except Exception as e:
+            raise CustomException(e, sys)
 

@@ -17,4 +17,9 @@ data_transformation_config:
   data_transformation_dir: stage03_data_transformation
   preprocessing_object_dir: preprocessing
   preprocessing_object_file_name: preprocessing_obj.pkl
+
+
+model_trainer_config:
+  model_reports_dir: model_eval_reports
+  model_trainer_dir: stage04_model_training
  

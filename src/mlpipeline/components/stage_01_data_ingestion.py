@@ -13,6 +13,9 @@ from mlpipeline.entity.artifact_entity import DataIngestionArtifact
 from ensure import ensure_annotations
 from sklearn.model_selection import StratifiedShuffleSplit
 
+from mlpipeline.components.data_transformation import DataTransformation
+from mlpipeline.components.model_trainer import ModelTrainer
+
 class DataIngestion:
     def __init__(self,data_ingestion_config_info:DataIngestionConfig):
         try:
@@ -95,6 +98,16 @@ if __name__=="__main__":
     config = ConfigurationManager(config_file_path='configs\config.yaml')
     data_ingestion_config = config.get_data_ingestion_config()
     data_ingestion = DataIngestion(data_ingestion_config)
-    data_ingestion_response = data_ingestion.initiate_data_ingestion()
+    #data_ingestion_response = data_ingestion.initiate_data_ingestion()
+    train_file_path,test_file_path = data_ingestion.initiate_data_ingestion()
 
-# src\mlpipeline\components\stage_01_data_ingestion.py
+    data_transformation_config = config.get_data_transformation_config(data_ingestion_config=data_ingestion_config)
+    data_transformation = DataTransformation(data_transformation_config_info=data_transformation_config)
+    train_arr,test_arr,_= data_transformation.inititate_data_transformation()
+
+    model_trainer_config = config.get_model_trainer_config(data_ingestion_config=data_ingestion_config, data_transformation_config_info=data_transformation_config)
+
+    model_trainer = ModelTrainer(model_trainer_config_info=model_trainer_config)
+
+    print(model_trainer.initiate_model_trainer(train_arr,test_arr))
+
